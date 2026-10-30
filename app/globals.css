@@ -1,0 +1,361 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+/* Native Silicon design system — see design handoff README → Design tokens.
+   Light is the default; .dark follows the OS preference via next-themes. */
+:root {
+  /* Brand scales */
+  --ns-lavender-200: #d9c5e1;
+  --ns-lavender-300: #c2a3cf;
+  --ns-lavender-400: #a67db8;
+  --ns-lavender-500: #8e63a3;
+  --ns-lavender-600: #74508a;
+  --ns-silver-50: #f6f8f7;
+  --ns-silver-100: #eaefec;
+  --ns-silver-200: #d8e2dc;
+  --ns-silver-300: #b9c8c1;
+  --ns-silver-400: #93a59d;
+  --ns-ink-200: #b4bcc6;
+  --ns-ink-300: #7a8593;
+  --ns-ink-400: #4b5462;
+  --ns-ink-500: #353c47;
+  --ns-ink-600: #262c36;
+  --ns-ink-700: #1c2129;
+  --ns-ink-800: #11141a;
+  --ns-success: #5b8c6e;
+  --ns-warning: #c9a25b;
+  --ns-danger: #c25656;
+
+  /* Surfaces & text */
+  --page: #f6f8f7;
+  --elevated: #ffffff;
+  --sunken: #eaefec;
+  --fg: #262c36;
+  --fg-muted: #4b5462;
+  --fg-subtle: #7a8593;
+  --line: #b9c8c1;
+  --line-subtle: #d8e2dc;
+  --line-strong: #b4bcc6;
+  --brand: #a67db8;
+  --brand-hover: #8e63a3;
+  --eyebrow: #74508a;
+  --brand-tint: rgba(166, 125, 184, 0.12);
+  --nav-glass: rgba(246, 248, 247, 0.82);
+
+  --ns-shadow-xs: 0 1px 2px rgba(38, 44, 54, 0.06);
+  --ns-shadow-sm: 0 1px 3px rgba(38, 44, 54, 0.08), 0 1px 2px rgba(38, 44, 54, 0.04);
+  --ns-shadow-md: 0 6px 16px rgba(38, 44, 54, 0.08), 0 2px 4px rgba(38, 44, 54, 0.04);
+  --ns-shadow-lg: 0 14px 32px rgba(38, 44, 54, 0.10), 0 4px 8px rgba(38, 44, 54, 0.04);
+  --ns-shadow-brand: 0 8px 24px rgba(166, 125, 184, 0.28);
+
+  --ns-ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ns-ease-soft: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --ns-ease-float: cubic-bezier(0.32, 0.72, 0, 1);
+
+  /* shadcn/ui aliases — kept for the auth, score and audit pages */
+  --background: var(--page);
+  --foreground: var(--fg);
+  --card: var(--elevated);
+  --card-foreground: var(--fg);
+  --popover: var(--elevated);
+  --popover-foreground: var(--fg);
+  --primary: var(--fg);
+  --primary-foreground: var(--page);
+  --secondary: var(--sunken);
+  --secondary-foreground: var(--fg);
+  --muted: var(--sunken);
+  --muted-foreground: var(--fg-muted);
+  --accent: var(--brand);
+  --accent-foreground: var(--ns-silver-50);
+  --destructive: var(--ns-danger);
+  --destructive-foreground: var(--ns-silver-50);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--brand);
+  --chart-1: var(--brand);
+  --chart-2: var(--ns-success);
+  --chart-3: var(--ns-warning);
+  --chart-4: var(--ns-danger);
+  --chart-5: var(--ns-lavender-600);
+  --radius: 0.75rem;
+  --sidebar: var(--elevated);
+  --sidebar-foreground: var(--fg);
+  --sidebar-primary: var(--fg);
+  --sidebar-primary-foreground: var(--page);
+  --sidebar-accent: var(--sunken);
+  --sidebar-accent-foreground: var(--fg);
+  --sidebar-border: var(--line);
+  --sidebar-ring: var(--brand);
+}
+
+.dark {
+  --page: #1c2129;
+  --elevated: #262c36;
+  --sunken: #11141a;
+  --fg: #eaefec;
+  --fg-muted: #b9c8c1;
+  --fg-subtle: #b4bcc6;
+  --line: #353c47;
+  --line-subtle: #262c36;
+  --line-strong: #7a8593;
+  --brand: #b990c9;
+  --brand-hover: #c9a3d8;
+  --eyebrow: #b990c9;
+  --brand-tint: rgba(185, 144, 201, 0.16);
+  --nav-glass: rgba(28, 33, 41, 0.82);
+
+  --ns-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ns-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+  --ns-shadow-md: 0 6px 16px rgba(0, 0, 0, 0.4);
+  --ns-shadow-lg: 0 14px 32px rgba(0, 0, 0, 0.5);
+}
+
+@theme inline {
+  --font-sans: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+  --font-display: var(--font-figtree), "Figtree", system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-tint: var(--brand-tint);
+  --color-eyebrow: var(--eyebrow);
+  --color-page: var(--page);
+  --color-elevated: var(--elevated);
+  --color-sunken: var(--sunken);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-line: var(--line);
+  --color-line-subtle: var(--line-subtle);
+  --color-line-strong: var(--line-strong);
+  --color-lavender-200: var(--ns-lavender-200);
+  --color-lavender-300: var(--ns-lavender-300);
+  --color-lavender-400: var(--ns-lavender-400);
+  --color-lavender-500: var(--ns-lavender-500);
+  --color-silver-50: var(--ns-silver-50);
+  --color-silver-100: var(--ns-silver-100);
+  --color-silver-300: var(--ns-silver-300);
+  --color-silver-400: var(--ns-silver-400);
+  --color-ink-200: var(--ns-ink-200);
+  --color-ink-400: var(--ns-ink-400);
+  --color-ink-500: var(--ns-ink-500);
+  --color-ink-600: var(--ns-ink-600);
+  --color-ink-700: var(--ns-ink-700);
+  --color-ink-800: var(--ns-ink-800);
+  --color-success: var(--ns-success);
+  --shadow-xs: var(--ns-shadow-xs);
+  --shadow-sm: var(--ns-shadow-sm);
+  --shadow-md: var(--ns-shadow-md);
+  --shadow-lg: var(--ns-shadow-lg);
+  --shadow-brand: var(--ns-shadow-brand);
+  --ease-soft: var(--ns-ease-soft);
+  --ease-float: var(--ns-ease-float);
+  --ease-out-ns: var(--ns-ease-out);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  /* Signature eyebrow: mono, uppercase, lavender */
+  .eyebrow {
+    font: 500 12px/1.4 var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--eyebrow);
+  }
+
+  .mono-label {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  .h1-home {
+    font-size: clamp(42px, 5.4vw, 68px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+
+  .h1-page {
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  .h2-section {
+    font-size: clamp(34px, 4vw, 48px);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+
+  .h2-band {
+    font-size: clamp(30px, 3.4vw, 40px);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+
+}
+
+/* Admin form controls */
+@layer components {
+  .field {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--page);
+    color: var(--fg);
+    padding: 9px 12px;
+    font: 400 15px/1.5 var(--font-sans);
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px var(--brand-tint);
+  }
+  textarea.field {
+    resize: vertical;
+  }
+  .field:disabled {
+    cursor: not-allowed;
+    background: var(--sunken);
+    color: var(--fg-muted);
+  }
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    display: inline-flex;
+    height: 40px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 0 18px;
+    font: 500 14px/1 var(--font-sans);
+    transition: background 150ms, color 150ms, border-color 150ms;
+  }
+  .btn-primary {
+    background: var(--fg);
+    color: var(--page);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--brand);
+  }
+  .btn-secondary {
+    border: 1px solid var(--line);
+    color: var(--fg);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    border-color: var(--brand);
+    color: var(--brand);
+  }
+  .btn-ghost {
+    height: 32px;
+    padding: 0 10px;
+    color: var(--fg-muted);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    color: var(--fg);
+    background: var(--sunken);
+  }
+  .btn-primary:disabled,
+  .btn-secondary:disabled,
+  .btn-ghost:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+/* ── Résumé print layout ─────────────────────────────────────────────────────
+   "Print / Save PDF" on the public page goes through this: light palette,
+   no chrome, tight margins, sections kept whole where possible. */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm;
+  }
+  :root,
+  .dark {
+    --page: #ffffff;
+    --elevated: #ffffff;
+    --sunken: #f6f8f7;
+    --fg: #11141a;
+    --fg-muted: #353c47;
+    --fg-subtle: #4b5462;
+    --line: #d8e2dc;
+    --brand: #74508a;
+    --eyebrow: #74508a;
+  }
+  html,
+  body {
+    background: #fff !important;
+    font-size: 12px;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-avoid-break {
+    break-inside: avoid;
+  }
+  a {
+    text-decoration: none;
+  }
+}
