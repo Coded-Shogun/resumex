@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// The whole résumé is one JSON document stored in Supabase (resume_content).
+// The whole résumé is one JSON document stored per version in Supabase (resume_versions.document).
 // Every editable field lives here; the public page and the admin editor both
 // read this shape, so adding a field means: add it here, render it in
 // components/resume-view.tsx, and expose it in components/admin/editor.tsx.

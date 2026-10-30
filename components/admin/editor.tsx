@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
-import { Braces, Eye, FileUp, LogOut, Rocket, Save } from "lucide-react";
-import { publish, saveDraft, signOut, uploadPdf, type ActionResult } from "@/app/admin/actions";
+import Link from "next/link";
+import { ArrowLeft, Braces, Copy, Eye, FileUp, Lock, Rocket, Save } from "lucide-react";
+import { activateVersion, createVersion, saveVersion, uploadPdf, type ActionResult } from "@/app/admin/actions";
+import { when } from "@/lib/format";
 import { normalize } from "@/lib/normalize";
+import type { Role, VersionSummary } from "@/lib/resume";
 import type { Resume } from "@/lib/schema";
 import { Field, LinesField, ListEditor, TextArea } from "./fields";
 
@@ -20,32 +23,20 @@ const SECTIONS = [
 ] as const;
 type SectionId = (typeof SECTIONS)[number][0];
 
-function when(ts: string | null) {
-  return ts ? new Date(ts).toLocaleString("en-ZA", { dateStyle: "medium", timeStyle: "short" }) : "never";
-}
-
-export function Editor({
-  initial,
-  email,
-  draftUpdatedAt,
-  publishedAt,
-}: {
-  initial: Resume;
-  email: string;
-  draftUpdatedAt: string | null;
-  publishedAt: string | null;
-}) {
+export function Editor({ initial, version, role }: { initial: Resume; version: VersionSummary; role: Role }) {
   const [doc, setDoc] = useState<Resume>(initial);
-  const [saved, setSaved] = useState(() => JSON.stringify(initial));
+  const [label, setLabel] = useState(version.label);
+  const [saved, setSaved] = useState(() => JSON.stringify([version.label, initial]));
   const [section, setSection] = useState<SectionId>("basics");
   const [status, setStatus] = useState<ActionResult | null>(null);
-  const [times, setTimes] = useState({ draft: draftUpdatedAt, published: publishedAt });
+  const [updatedAt, setUpdatedAt] = useState(version.updatedAt);
   const [json, setJson] = useState("");
   const [pending, startTransition] = useTransition();
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const dirty = useMemo(() => JSON.stringify(doc) !== saved, [doc, saved]);
-  const unpublished = times.draft && times.published && new Date(times.draft) > new Date(times.published);
+  // The live version is read-only (the database refuses edits to it too).
+  const locked = version.isActive;
+  const dirty = useMemo(() => !locked && JSON.stringify([label, doc]) !== saved, [locked, label, doc, saved]);
 
   useEffect(() => {
     const warn = (e: BeforeUnloadEvent) => {
@@ -59,26 +50,31 @@ export function Editor({
 
   async function save(): Promise<boolean> {
     const clean = normalize(doc) as Resume;
-    const res = await saveDraft(clean);
+    const res = await saveVersion(version.id, label, clean);
     setStatus(res);
     if (res.ok) {
       setDoc(clean);
-      setSaved(JSON.stringify(clean));
-      setTimes((t) => ({ ...t, draft: res.at ?? t.draft }));
+      setSaved(JSON.stringify([label, clean]));
+      if (res.at) setUpdatedAt(res.at);
     }
     return res.ok;
   }
 
   const onSave = () => startTransition(async () => void (await save()));
 
-  const onPublish = () =>
+  const onActivate = () =>
     startTransition(async () => {
       if (dirty && !(await save())) return;
-      if (!confirm("Publish the saved draft to the public résumé?")) return;
-      const res = await publish();
-      setStatus(res);
-      if (res.ok) setTimes((t) => ({ ...t, published: res.at ?? t.published }));
+      if (!confirm(`Make "${label}" the live résumé?`)) return;
+      // Revalidation re-renders this page as the (now locked) live version.
+      setStatus(await activateVersion(version.id));
     });
+
+  const onDuplicate = () => {
+    const name = prompt("Name for the new version:", `${label} (copy)`);
+    if (!name) return;
+    startTransition(async () => setStatus(await createVersion(version.id, name)));
+  };
 
   const onUpload = () =>
     startTransition(async () => {
@@ -110,33 +106,53 @@ export function Editor({
       {/* ── Toolbar ──────────────────────────────────────────────────────── */}
       <header className="sticky top-0 z-10 border-b border-line-subtle bg-[var(--nav-glass)] backdrop-blur">
         <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-3 px-5 py-3 sm:px-8">
-          <div className="flex flex-col">
-            <span className="eyebrow">Résumé admin</span>
-            <span className="text-xs text-fg-subtle">
-              Draft saved {when(times.draft)} · Published {when(times.published)}
-              {dirty ? " · unsaved changes" : unpublished ? " · draft not yet published" : ""}
-            </span>
+          <div className="flex min-w-0 flex-1 items-center gap-3">
+            <Link href="/admin" className="btn-ghost shrink-0" aria-label="Back to versions" title="Back to versions">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+            <div className="flex min-w-0 flex-1 flex-col">
+              <input
+                aria-label="Version name"
+                value={label}
+                disabled={locked}
+                onChange={(e) => setLabel(e.target.value)}
+                className="w-full max-w-[420px] truncate rounded-[8px] border border-transparent bg-transparent px-1 text-[17px] font-medium text-fg hover:border-line focus:border-brand focus:outline-none disabled:hover:border-transparent"
+              />
+              <span className="px-1 text-xs text-fg-subtle">
+                {locked ? "Live · locked" : "Not live"} · saved {when(updatedAt)}
+                {dirty && " · unsaved changes"}
+              </span>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <button type="button" className="btn-secondary" onClick={onSave} disabled={pending || !dirty}>
-              <Save className="h-4 w-4" /> Save draft
-            </button>
-            <a className="btn-secondary" href="/admin/preview" target="_blank" rel="noopener" title="Shows the last saved draft">
+            {locked ? (
+              <button type="button" className="btn-primary" onClick={onDuplicate} disabled={pending}>
+                <Copy className="h-4 w-4" /> Duplicate to edit
+              </button>
+            ) : (
+              <button type="button" className="btn-secondary" onClick={onSave} disabled={pending || !dirty}>
+                <Save className="h-4 w-4" /> Save
+              </button>
+            )}
+            <a className="btn-secondary" href={`/admin/versions/${version.id}/preview`} target="_blank" rel="noopener" title="Shows the last saved state">
               <Eye className="h-4 w-4" /> Preview
             </a>
-            <button type="button" className="btn-primary" onClick={onPublish} disabled={pending}>
-              <Rocket className="h-4 w-4" /> Publish
-            </button>
-            <form action={signOut}>
-              <button type="submit" className="btn-ghost" title={`Signed in as ${email}`} aria-label="Sign out">
-                <LogOut className="h-4 w-4" />
+            {!locked && role === "admin" && (
+              <button type="button" className="btn-primary" onClick={onActivate} disabled={pending}>
+                <Rocket className="h-4 w-4" /> Make live
               </button>
-            </form>
+            )}
           </div>
         </div>
-        {status && (
-          <div role="status" className={`border-t border-line-subtle px-5 py-2 text-center text-sm sm:px-8 ${status.ok ? "text-success" : "text-destructive"}`}>
-            {status.message}
+        {(status || locked) && (
+          <div
+            role="status"
+            className={`flex items-center justify-center gap-2 border-t border-line-subtle px-5 py-2 text-center text-sm sm:px-8 ${
+              status ? (status.ok ? "text-success" : "text-destructive") : "text-fg-muted"
+            }`}
+          >
+            {!status && <Lock className="h-3.5 w-3.5" />}
+            {status?.message ?? "This is the live version, so it is read-only. Duplicate it to make changes, then make the copy live."}
           </div>
         )}
       </header>
@@ -157,7 +173,7 @@ export function Editor({
           ))}
         </nav>
 
-        <section className="flex min-w-0 flex-col gap-5 rounded-[24px] bg-elevated p-5 shadow-sm sm:p-8">
+        <fieldset disabled={locked} className="m-0 flex min-w-0 flex-col gap-5 rounded-[24px] border-0 bg-elevated p-5 shadow-sm sm:p-8">
           {section === "basics" && (
             <>
               <div className="flex flex-col gap-4 sm:flex-row">
@@ -326,7 +342,7 @@ export function Editor({
               </div>
             </div>
           )}
-        </section>
+        </fieldset>
       </div>
     </div>
   );

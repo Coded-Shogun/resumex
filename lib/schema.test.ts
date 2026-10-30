@@ -41,3 +41,9 @@ describe("schema", () => {
     expect(resumeSchema.safeParse(bad).success).toBe(false);
   });
 });
+
+describe("seed content", () => {
+  it("lists the Native Silicon founder role first", () => {
+    expect(seed.experience[0]).toMatchObject({ role: "Founder", company: "Native Silicon", end: "Present" });
+  });
+});

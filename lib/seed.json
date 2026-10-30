@@ -6,7 +6,10 @@
     "email": "thendo@nativesi.co.za",
     "phone": "",
     "links": [
-      { "label": "Native Silicon", "url": "https://nativesilicon.co.za/about" }
+      {
+        "label": "Native Silicon",
+        "url": "https://nativesilicon.co.za/about"
+      }
     ]
   },
   "summary": [
@@ -17,37 +20,152 @@
   "competencies": [
     {
       "name": "Infrastructure & Cloud",
-      "items": ["Kubernetes", "Containerization", "Virtualization", "Infrastructure as Code", "Linux Systems Administration", "Cloud Networking"]
+      "items": [
+        "Kubernetes",
+        "Containerization",
+        "Virtualization",
+        "Infrastructure as Code",
+        "Linux Systems Administration",
+        "Cloud Networking"
+      ]
     },
     {
       "name": "Backend & Data",
-      "items": ["Python", "PostgreSQL", "ETL / Data Pipelines", "ML Ops", "REST / GraphQL / API Design"]
+      "items": [
+        "Python",
+        "PostgreSQL",
+        "ETL / Data Pipelines",
+        "ML Ops",
+        "REST / GraphQL / API Design"
+      ]
     },
     {
       "name": "DevOps & SRE",
-      "items": ["CI/CD Pipelines", "Observability", "Config Management", "Load Balancing", "Incident Response & RCA", "Secrets Management"]
+      "items": [
+        "CI/CD Pipelines",
+        "Observability",
+        "Config Management",
+        "Load Balancing",
+        "Incident Response & RCA",
+        "Secrets Management"
+      ]
     },
     {
       "name": "Frontend & Identity",
-      "items": ["React", "UX/UI Design Frameworks", "SSO / OIDC / IAM", "2FA / MFA"]
+      "items": [
+        "React",
+        "UX/UI Design Frameworks",
+        "SSO / OIDC / IAM",
+        "2FA / MFA"
+      ]
     },
     {
       "name": "Leadership & Strategy",
-      "items": ["Solution Driven", "Team Leadership", "Research & Development", "Product Development"]
+      "items": [
+        "Solution Driven",
+        "Team Leadership",
+        "Research & Development",
+        "Product Development"
+      ]
     }
   ],
   "skills": [
-    { "name": "Container & Orchestration", "items": ["Kubernetes", "Docker", "Unit Tests", "E2E Tests", "Cosign", "Vulnerability Tests"] },
-    { "name": "Cloud & Virtualisation", "items": ["Proxmox", "GCP", "AWS", "Hybrid Cloud Design", "High Availability", "Disaster Recovery"] },
-    { "name": "IaC & Automation", "items": ["Terraform", "Ansible", "Bash scripting", "CI/CD Ops", "FluxCD"] },
-    { "name": "Observability Stack", "items": ["Prometheus", "Grafana", "Loki", "Tempo", "cAdvisor", "Falco", "Hubble (eBPF)"] },
-    { "name": "Security & Networking", "items": ["Cilium / eBPF", "MikroTik / RouterOS", "Cloudflare DNS", "HashiCorp Vault", "Nginx"] },
-    { "name": "Databases", "items": ["PostgreSQL", "MySQL"] },
-    { "name": "Backend Development", "items": ["Python", "REST", "GraphQL", "MCP"] },
-    { "name": "Data Engineering", "items": ["Pandas", "SQL"] },
-    { "name": "Frontend Development", "items": ["JavaScript", "React"] }
+    {
+      "name": "Container & Orchestration",
+      "items": [
+        "Kubernetes",
+        "Docker",
+        "Unit Tests",
+        "E2E Tests",
+        "Cosign",
+        "Vulnerability Tests"
+      ]
+    },
+    {
+      "name": "Cloud & Virtualisation",
+      "items": [
+        "Proxmox",
+        "GCP",
+        "AWS",
+        "Hybrid Cloud Design",
+        "High Availability",
+        "Disaster Recovery"
+      ]
+    },
+    {
+      "name": "IaC & Automation",
+      "items": [
+        "Terraform",
+        "Ansible",
+        "Bash scripting",
+        "CI/CD Ops",
+        "FluxCD"
+      ]
+    },
+    {
+      "name": "Observability Stack",
+      "items": [
+        "Prometheus",
+        "Grafana",
+        "Loki",
+        "Tempo",
+        "cAdvisor",
+        "Falco",
+        "Hubble (eBPF)"
+      ]
+    },
+    {
+      "name": "Security & Networking",
+      "items": [
+        "Cilium / eBPF",
+        "MikroTik / RouterOS",
+        "Cloudflare DNS",
+        "HashiCorp Vault",
+        "Nginx"
+      ]
+    },
+    {
+      "name": "Databases",
+      "items": [
+        "PostgreSQL",
+        "MySQL"
+      ]
+    },
+    {
+      "name": "Backend Development",
+      "items": [
+        "Python",
+        "REST",
+        "GraphQL",
+        "MCP"
+      ]
+    },
+    {
+      "name": "Data Engineering",
+      "items": [
+        "Pandas",
+        "SQL"
+      ]
+    },
+    {
+      "name": "Frontend Development",
+      "items": [
+        "JavaScript",
+        "React"
+      ]
+    }
   ],
   "experience": [
+    {
+      "role": "Founder",
+      "company": "Native Silicon",
+      "start": "",
+      "end": "Present",
+      "bullets": [
+        "Founded Native Silicon to help South African businesses get past the challenges that cripple growth, by building behavioural elements into software so owners can focus on running the business while staying compliant.",
+        "Grew it into a studio with 28+ solutions deployed and SA-CNI, a framework for measuring how businesses move through the South African economy. Native Books, in accounting, is the first product built on it."
+      ]
+    },
     {
       "role": "DevOps / Systems Engineer",
       "company": "iConnect SA",
@@ -137,9 +255,21 @@
     }
   ],
   "education": [
-    { "title": "BTech Higher National Diploma in Information Systems (Network Engineering)", "institution": "CTI Education Group", "year": "" },
-    { "title": "DevOps Engineer", "institution": "LPI", "year": "" },
-    { "title": "Kubernetes CKAD", "institution": "The Linux Foundation", "year": "" }
+    {
+      "title": "BTech Higher National Diploma in Information Systems (Network Engineering)",
+      "institution": "CTI Education Group",
+      "year": ""
+    },
+    {
+      "title": "DevOps Engineer",
+      "institution": "LPI",
+      "year": ""
+    },
+    {
+      "title": "Kubernetes CKAD",
+      "institution": "The Linux Foundation",
+      "year": ""
+    }
   ],
   "pdfUrl": ""
 }

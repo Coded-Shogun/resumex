@@ -273,6 +273,11 @@
   textarea.field {
     resize: vertical;
   }
+  .field:disabled {
+    cursor: not-allowed;
+    background: var(--sunken);
+    color: var(--fg-muted);
+  }
   .btn-primary,
   .btn-secondary,
   .btn-ghost {
