@@ -1,0 +1,84 @@
+name: Build & Deploy
+
+# Same flow as main-site: build on the self-hosted runner, push to the
+# in-cluster registry with a <sha>-<timestamp> tag, and Flux image automation
+# in k8s-fleet (resumex/flux/image-automation.yaml) rolls it out.
+# Only code changes need this. Résumé content is edited live at /admin.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false # never cancel a deploy mid-flight
+
+jobs:
+  build-and-push:
+    name: Build image and push to registry
+    runs-on: self-hosted
+
+    env:
+      REGISTRY: 192.168.88.199:6800
+      IMAGE_NAME: resumex
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version from package.json
+        id: version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Set image tags
+        id: tags
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          TS=$(date -u +%Y%m%d%H%M%S)
+          SHA_SHORT=$(git rev-parse --short HEAD)
+          echo "latest=${REGISTRY}/${IMAGE_NAME}:latest" >> "$GITHUB_OUTPUT"
+          echo "semver=${REGISTRY}/${IMAGE_NAME}:v${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "sha_ts=${REGISTRY}/${IMAGE_NAME}:${SHA_SHORT}-${TS}" >> "$GITHUB_OUTPUT"
+
+      - name: Build image
+        env:
+          TAG_LATEST: ${{ steps.tags.outputs.latest }}
+          TAG_SEMVER: ${{ steps.tags.outputs.semver }}
+          TAG_SHA_TS: ${{ steps.tags.outputs.sha_ts }}
+          VERSION: ${{ steps.version.outputs.version }}
+          GIT_SHA: ${{ github.sha }}
+        run: |
+          docker build \
+            --tag "$TAG_LATEST" \
+            --tag "$TAG_SEMVER" \
+            --tag "$TAG_SHA_TS" \
+            --label "org.opencontainers.image.revision=${GIT_SHA}" \
+            --label "org.opencontainers.image.version=${VERSION}" \
+            --file Dockerfile \
+            .
+
+      - name: Push to registry
+        env:
+          TAG_LATEST: ${{ steps.tags.outputs.latest }}
+          TAG_SEMVER: ${{ steps.tags.outputs.semver }}
+          TAG_SHA_TS: ${{ steps.tags.outputs.sha_ts }}
+        run: |
+          docker push "$TAG_LATEST"
+          docker push "$TAG_SEMVER"
+          docker push "$TAG_SHA_TS"
+
+      - name: Prune dangling build cache
+        run: docker image prune -f
+
+      - name: Summary
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+          GIT_SHA: ${{ github.sha }}
+          TAG_SHA_TS: ${{ steps.tags.outputs.sha_ts }}
+        run: |
+          echo "### Deployed :rocket:" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Version:** v${VERSION}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Commit:** \`${GIT_SHA}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Image:** \`${TAG_SHA_TS}\`" >> "$GITHUB_STEP_SUMMARY"

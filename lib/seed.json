@@ -1,0 +1,145 @@
+{
+  "basics": {
+    "name": "Thendo Siminya",
+    "title": "DevOps / Systems Engineer",
+    "location": "Johannesburg, South Africa",
+    "email": "thendo@nativesi.co.za",
+    "phone": "",
+    "links": [
+      { "label": "Native Silicon", "url": "https://nativesilicon.co.za/about" }
+    ]
+  },
+  "summary": [
+    "A results-driven engineer with over 10 years of experience designing, building and operating resilient, cloud-native infrastructure and applications across on-premise, hybrid and public cloud environments. I have a sharp mind and a keen ability to identify success metrics and break down issues and goals in order to systematically address problems that affect the business as a whole. With a background as a college instructor and as a team lead in development and support, I learn complex topics quickly, take part in knowledge sharing and become a valuable asset to any team I am part of.",
+    "Through my enthusiasm to assist, learn and grow, I take part in solving business problems that affect internal process efficiency or customer-facing solutions. I pride myself on being responsible — responsible enough to take on tasks and projects that require leadership, accountability and a willingness to find solutions, delivering actionable POCs with limited resources, unsupervised, or across large sprints.",
+    "Having worked in the market research, education and telecommunications sectors, I have a good understanding of the importance of data in improving a product, of planning, distributing and scaling users and applications, and the patience and focus to work at a task and create teachable methods of solving issues."
+  ],
+  "competencies": [
+    {
+      "name": "Infrastructure & Cloud",
+      "items": ["Kubernetes", "Containerization", "Virtualization", "Infrastructure as Code", "Linux Systems Administration", "Cloud Networking"]
+    },
+    {
+      "name": "Backend & Data",
+      "items": ["Python", "PostgreSQL", "ETL / Data Pipelines", "ML Ops", "REST / GraphQL / API Design"]
+    },
+    {
+      "name": "DevOps & SRE",
+      "items": ["CI/CD Pipelines", "Observability", "Config Management", "Load Balancing", "Incident Response & RCA", "Secrets Management"]
+    },
+    {
+      "name": "Frontend & Identity",
+      "items": ["React", "UX/UI Design Frameworks", "SSO / OIDC / IAM", "2FA / MFA"]
+    },
+    {
+      "name": "Leadership & Strategy",
+      "items": ["Solution Driven", "Team Leadership", "Research & Development", "Product Development"]
+    }
+  ],
+  "skills": [
+    { "name": "Container & Orchestration", "items": ["Kubernetes", "Docker", "Unit Tests", "E2E Tests", "Cosign", "Vulnerability Tests"] },
+    { "name": "Cloud & Virtualisation", "items": ["Proxmox", "GCP", "AWS", "Hybrid Cloud Design", "High Availability", "Disaster Recovery"] },
+    { "name": "IaC & Automation", "items": ["Terraform", "Ansible", "Bash scripting", "CI/CD Ops", "FluxCD"] },
+    { "name": "Observability Stack", "items": ["Prometheus", "Grafana", "Loki", "Tempo", "cAdvisor", "Falco", "Hubble (eBPF)"] },
+    { "name": "Security & Networking", "items": ["Cilium / eBPF", "MikroTik / RouterOS", "Cloudflare DNS", "HashiCorp Vault", "Nginx"] },
+    { "name": "Databases", "items": ["PostgreSQL", "MySQL"] },
+    { "name": "Backend Development", "items": ["Python", "REST", "GraphQL", "MCP"] },
+    { "name": "Data Engineering", "items": ["Pandas", "SQL"] },
+    { "name": "Frontend Development", "items": ["JavaScript", "React"] }
+  ],
+  "experience": [
+    {
+      "role": "DevOps / Systems Engineer",
+      "company": "iConnect SA",
+      "start": "2023",
+      "end": "Present",
+      "bullets": [
+        "Helped design a multi-region application environment for deploying in-house applications that support the business and serve customers, which later became the Kubernetes cluster.",
+        "Conduct daily code improvements to built applications and knowledge sharing.",
+        "Built and maintain a Kubernetes cluster of bare-metal and VM nodes for containerized workloads developed by the team.",
+        "Implemented an eBPF/Cilium-based, kernel-attached firewall architecture with Hubble for deep observability, to assist application distribution across the cluster. Cilium lets us optimize network traffic for users accessing applications while keeping them highly available, taking advantage of its BGP support.",
+        "Designed a GitLab-based CI/CD pipeline that runs application tests. DevSecOps practices guide which workloads may be deployed to production: each needs a unit-testing framework, e2e tests and package vulnerability scanning, raising the quality of the code we ship. This lets us maintain workloads in a reliable, repeatable way and deliver application updates with rollback policies and disaster-recovery measures.",
+        "Manage infrastructure across self-hosted and cloud VPSs with Terraform and Ansible. This hybrid setup lets us use resources efficiently, balancing high availability with cloud costs.",
+        "Day-to-day operations include code refactors, application testing, CI/CD monitoring, strategic meetings and R&D."
+      ]
+    },
+    {
+      "role": "Software / IT Engineer",
+      "company": "Plus94 Research",
+      "start": "2015",
+      "end": "2023",
+      "bullets": [
+        "6+ years managing call centre operations and availability across multiple regions, spanning 150+ agents. Leading a team of technicians, we kept the call centre running with little to no downtime.",
+        "Ran the Microsoft environment: Office for day-to-day communication and Excel reporting, distributing Windows updates, and managing applications and access to network computers. Critical agent information was kept ephemeral on the node with data backed up to Active Directory, reducing agent downtime.",
+        "Data engineering: generated reports on call centre performance, call logs and agent portfolios across call centre and field interviews, and later developed an application to display live logs and statistics. Built Python applications to reliably process mixed-type data into an organised structure stored in a data lake, then expanded this into an application for managers to view processing metrics and query data for insights and extraction.",
+        "Built a custom survey application that we tested, improved and deployed for field and self-completed surveys.",
+        "Led the creation and management of a hybrid call centre of 150+ agents: a locally hosted PBX serving both local and remote users while keeping data local, with a web application to monitor calls and recordings."
+      ]
+    },
+    {
+      "role": "Technical Assistant",
+      "company": "Capitec",
+      "start": "2015",
+      "end": "2015",
+      "bullets": [
+        "Maintained the warehouse floor.",
+        "Processed new equipment destined for branches across the country."
+      ]
+    },
+    {
+      "role": "MLM Instructor",
+      "company": "CTI Education Group",
+      "start": "2014",
+      "end": "2014",
+      "bullets": [
+        "Created practicals for students.",
+        "Took part in course material improvements.",
+        "Graded student practicals and exams."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Call Centre Upgrade",
+      "org": "Plus94 Research",
+      "summary": "Improved call centre reliability, and planned a cloud-based solution for remote agents dialling into the call centre.",
+      "lesson": "I learned to lean into my leadership skills to coordinate the technicians distributing devices, to take responsibility for my own decisions, to keep the business goal at the core of the project, and to deliver reports to stakeholders."
+    },
+    {
+      "name": "Site Reliability Framework",
+      "org": "iConnect SA",
+      "summary": "A repeatable, reliable framework for keeping services available to users. Key success factors included failover nodes, managed backups, disaster-recovery playbooks, database backups and off-site disk backups.",
+      "lesson": "I learned what a reliable service means for potentially mission-critical systems. Services should have SLAs tied to them so we build frameworks that keep our applications available."
+    },
+    {
+      "name": "Cluster Observability and Security",
+      "org": "iConnect SA",
+      "summary": "Migrated from Flannel networking to BGP-based networking with Cilium. The goals: visibility into ephemeral containerized workloads, and bandwidth and latency optimizations so users can reliably access services.",
+      "lesson": "This taught me the importance of application observability: enriched performance data guides code updates and helps us improve our testing and code quality."
+    },
+    {
+      "name": "Monitoring Portal",
+      "org": "iConnect SA",
+      "summary": "Branched off an earlier voice partner portal: a way for customers to access router and connection details for the services they purchased from us.",
+      "lesson": "This improved the granularity of my testing and my maintenance of good-quality code, and showed the importance of versioning for safe rollbacks of bad or unoptimized code that could affect customer satisfaction."
+    },
+    {
+      "name": "MAPS — Market Research Survey Application",
+      "org": "Plus94 Research",
+      "summary": "From inception to delivery the project was tumultuous. There was a lack of urgency and leadership in the department, so I used it to prove I could take a leadership role within a bigger project. I rebuilt the application with an improved code architecture and delivered on its deliverables.",
+      "lesson": "This honed my sense of taking responsibility and helping the business beyond the scope of my own work. It taught me to plan effectively under a time crunch and to produce clean code for maintainers in an agile environment."
+    },
+    {
+      "name": "Cloud Call Centre Implementation",
+      "org": "Plus94 Research",
+      "summary": "With the pandemic approaching and no out-of-the-box way for agents to work during lockdown, my manager and I took a two-pronged approach: deploy firewalls at the call centres so users could VPN in from home, then coordinate laptop distribution and make sure users had the applications they needed to keep working from home.",
+      "lesson": "Finding a solution takes creative thinking focused on set goals, breaking the goal into milestones, and timeous reporting on those milestones."
+    }
+  ],
+  "education": [
+    { "title": "BTech Higher National Diploma in Information Systems (Network Engineering)", "institution": "CTI Education Group", "year": "" },
+    { "title": "DevOps Engineer", "institution": "LPI", "year": "" },
+    { "title": "Kubernetes CKAD", "institution": "The Linux Foundation", "year": "" }
+  ],
+  "pdfUrl": ""
+}
